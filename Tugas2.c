@@ -10,9 +10,14 @@ struct Pegawai {
     char jabatan[50];
     char golongan[3];
     int gaji;
+    int jamLembur;
 };
 
 int getGajiPegawai(char golongan[2]);
+int getTarifLembur(char golongan[2]);
+int hitungTotalGaji(int gaji, int jamLembur, int tarifLembur) {
+    return gaji + (jamLembur * tarifLembur);
+}
 
 int main(){
     struct Pegawai pegawai[MAX_PEGAWAI];
@@ -48,6 +53,18 @@ int main(){
         
         pegawai[i].gaji = getGajiPegawai(pegawai[i].golongan);
         printf("Gaji: Rp%d \n", pegawai[i].gaji);
+
+        /* Input 2*/
+        printf("\n=== Penghitungan Lembur ===\n");
+        printf("Nip = %d\n", pegawai[i].nip);
+        printf("Golongan = %s\n", pegawai[i].golongan);
+        printf("Jam Lembur = ");
+        scanf("%d", &pegawai[i].jamLembur);
+
+        int tarifLembur = getTarifLembur(pegawai[i].golongan);
+        int totalGaji = hitungTotalGaji(pegawai[i].gaji, pegawai[i].jamLembur, tarifLembur);
+
+        printf("Total Gaji Bulan ini = Rp%d\n", totalGaji);
     }
 
     return 0;
@@ -63,6 +80,18 @@ int getGajiPegawai(char golongan[2]) {
         return 1500000;
     } else {
         return 0; 
+    }
+}
+
+int getTarifLembur(char golongan[2]) {
+    if (strcmp(golongan, "D1") == 0) {
+        return 10000;
+    } else if (strcmp(golongan, "D2") == 0) {
+        return 5000;
+    } else if (strcmp(golongan, "D3") == 0) {
+        return 2500;
+    } else {
+        return 0;
     }
 }
 
